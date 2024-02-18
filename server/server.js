@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
-const postsRoutes = require("./routes/posts");
+const transactionsRoutes = require("./routes/transactions");
 
 // express app
 const app = express();
@@ -15,7 +15,7 @@ app.use((req, resp, next) => {
 });
 
 // routes
-app.use("/", postsRoutes);
+app.use("/", transactionsRoutes);
 
 // connect db
 mongoose
