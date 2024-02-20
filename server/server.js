@@ -2,10 +2,19 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+
 const transactionsRoutes = require("./routes/transactions");
 
 // express app
 const app = express();
+
+// cors
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+  })
+);
 
 // middleware
 app.use(express.json());
