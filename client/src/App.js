@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 //Pages and Components
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import { TransactionsContextProvider } from "./context/TransactionContext";
 
 function App() {
   return (
@@ -11,9 +12,11 @@ function App() {
       <Router>
         <Navbar />
         <div className="pages">
-          <Routes>
-            <Route path="/" Component={Home}></Route>
-          </Routes>
+          <TransactionsContextProvider>
+            <Routes>
+              <Route path="/" Component={Home}></Route>
+            </Routes>
+          </TransactionsContextProvider>
         </div>
       </Router>
     </div>

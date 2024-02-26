@@ -51,7 +51,7 @@ const deleteTransaction = async (req, resp) => {
   if (!transactions) {
     return resp.status(400).json({ error: "No Such Transaction." });
   }
-  return resp.status(204);
+  return resp.status(204).json();
 };
 
 // Update Transaction

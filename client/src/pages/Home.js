@@ -1,23 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+
 import TransactionDetails from "../components/TransactionDetails";
+import TransactionForm from "../components/TransactionForm";
+import useTransactionContext from "../hooks/useTransactionContext";
 
 function Home() {
-  const [transactions, setTransactions] = useState(null);
+  const { transactions, dispatch } = useTransactionContext();
 
   useEffect(() => {
     const fetchTransactions = async () => {
-      console.log("Calling fetch");
       const resp = await fetch("http://localhost:4000/");
-      console.log(resp);
       const respJson = await resp.json();
 
       if (resp.ok) {
-        setTransactions(respJson);
+        dispatch({ type: "SET_TRANSACTION", payload: respJson });
       }
     };
 
     fetchTransactions();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="home">
@@ -30,6 +31,7 @@ function Home() {
             />
           ))}
       </div>
+      <TransactionForm />
     </div>
   );
 }
