@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const {
   createTransaction,
   getAllTransaction,
@@ -7,6 +6,12 @@ const {
   deleteTransaction,
   updateTransaction,
 } = require("../controllers/transactionsController");
+const requireAuth = require("../middleware/requireAuth");
+
+const router = express.Router();
+
+// require auth for these routes
+router.use(requireAuth);
 
 // get all
 router.get("/", getAllTransaction);

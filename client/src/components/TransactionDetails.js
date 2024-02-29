@@ -1,13 +1,25 @@
 import React from "react";
 import useTransactionContext from "../hooks/useTransactionContext";
+import useAuthContext from "../hooks/useAuthContext";
 
 function TransactionDetails({ transaction }) {
   const { dispatch } = useTransactionContext();
+  const { user } = useAuthContext();
 
   const handleClick = async () => {
-    const resp = await fetch("http://localhost:4000/" + transaction._id, {
-      method: "DELETE",
-    });
+    if (!user) {
+      return;
+    }
+
+    const resp = await fetch(
+      process.env.REACT_APP_API_URL + "/transactions/" + transaction._id,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     if (resp.status === 204) {
       dispatch({ type: "DELETE_TRANSACTION", payload: transaction._id });
@@ -30,7 +42,9 @@ function TransactionDetails({ transaction }) {
         {transaction.payors.join(", ")}
       </p>
       <p>{transaction.updatedAt}</p>
-      <span onClick={handleClick}>Delete</span>
+      <span className="material-symbols-outlined" onClick={handleClick}>
+        delete
+      </span>
     </div>
   );
 }

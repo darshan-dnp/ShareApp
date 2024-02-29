@@ -3,7 +3,11 @@ const mongoose = require("mongoose");
 
 // Get All Transactions
 const getAllTransaction = async (req, resp) => {
-  const transactions = await Transaction.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+
+  const transactions = await Transaction.find({ user_id }).sort({
+    createdAt: -1,
+  });
   resp.status(200).json(transactions);
 };
 
@@ -25,9 +29,11 @@ const getSingleTransaction = async (req, resp) => {
 // Create Transaction
 const createTransaction = async (req, resp) => {
   const { title, amount, payee, payors } = req.body;
+  const user_id = req.user._id;
 
   try {
     const transaction = await Transaction.create({
+      user_id,
       title,
       amount,
       payee,
