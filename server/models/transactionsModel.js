@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema(
   {
+    user_id: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
